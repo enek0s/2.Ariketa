@@ -1,0 +1,49 @@
+ETL Ariketa · generaCSV_bizikletak.py
+Inplementazioa: PANDAS — KODEA ZUK IDATZI BEHAR DUZU
+
+Datuak jada emanda dituzu (ez dituzu sortu behar):
+  datu-iturriak/bizikletak.csv   (10 bizikleta: BizikletaID, Eredua,
+                                   Fabrikatzailea, Mota)
+  datu-iturriak/erabilerak.csv   (350 erabilera: Data, BizikletaID,
+                                   Hiria, Minutuak, Km_egindakoak)
+
+Zure lana: fitxategi honetan FUNTZIORIK, LERRORIK EZ DAGO — beheko
+azalpenei jarraituz, kodea zerotik idatzi behar duzu.
+
+Prozesua (generaCSV_pandas.py adibidearen egitura berean):
+
+  1. EXTRACT
+     - Inportatu pandas `pd` gisa.
+     - Irakurri bi CSV-ak `pd.read_csv()`-rekin:
+         bizikletak.csv  -> aldagai batean
+         erabilerak.csv  -> beste aldagai batean
+
+  2. TRANSFORM
+     a) Definitu goiko aldagai batean zein MOTA aztertu nahi duzun
+        (adibidez: "Urban"). Erabili aldagai bat, ez idatzi balioa
+        zuzenean kodean barrena.
+     b) Iragazi bizikletak taula, MOTA horretako errenkadak soilik
+        gelditzeko (maska boolear bat erabiliz: df[df["zutabea"] == balioa]).
+     c) Lotu (merge) iragazitako bizikletak eta erabilerak taulak,
+        biek partekatzen duten zutabetik (BizikletaID). Erabili
+        `on=` parametroa, eta `how="inner"`.
+     d) Taldekatu (groupby) emaitza Eredua eta Fabrikatzailea-ren
+        arabera, eta batu (sum) Km_egindakoak zutabea, "km_guztira"
+        izeneko zutabe berri batean. Kontuz: groupby-ren emaitzak
+        zutabe arrunt gisa mantendu behar dira gero CSV batean
+        gordetzeko (pentsa `as_index` parametuan).
+     e) Ordenatu emaitza km_guztira zutabearen arabera, handitik
+        txikira.
+
+  3. LOAD
+     - Gorde emaitza `resultado_bizikletak.csv` fitxategian,
+       `to_csv()`-rekin, indize-zutabea gorde gabe.
+
+Gainera, script-ak kontsolan inprimatu behar du:
+  - Aukeratutako MOTA.
+  - Zenbat eredu aurkitu diren emaitzan.
+  - Emaitza-taula osoa.
+
+Ez dago TODO markarik — hemendik aurrera dena zuk idatzi behar duzu.
+
+# Zure kodea hemendik aurrera:
