@@ -13,4 +13,7 @@ def main():
 
    df_bizikleta_mota = df_bizikleta[df_bizikleta["Mota"] == MOTA]
 
-   print(df_bizikleta_mota.to_string)
+   print(df_bizikleta_mota.to_string())
+
+if __name__ == "__main__":
+   main()
